@@ -14,6 +14,8 @@
     <td>{{ row.goods_name }}</td>
     <td>${{ row.goods_price }}</td>
     <td>
+      <input type="text" class="form-control form-control-sm form-ipt" v-if="row.inputVisible" v-focus v-model.trim="row.inputValue" @blur="onInputConfirm(row)" @keyup.enter="onInputConfirm(row)" @keyup.esc="row.inputValue = ''"/>
+      <button type="button" class="btn btn-primary" v-else @click="row.inputVisible = true">+Tag</button>
       <!-- 標籤 -->
       <span class="badge text-bg-warning ms-2" v-for="item in row.tags" :key="item">{{item}}</span>
     </td>
@@ -47,6 +49,18 @@
       //根據id刪除商品
       onRemove(id) {
         this.goodslist = this.goodslist.filter(x => x.id !== id)
+      },
+      onInputConfirm(row) {
+        const val = row.inputValue
+        row.inputValue = ''
+        row.inputVisible = false
+        if(!val || row.tags.indexOf(val) !== -1) return
+        row.tags.push(val)
+      }
+    },
+    directives: {
+      focus(el) {
+        el.focus()
       }
     },
     components: {
@@ -56,5 +70,8 @@
 </script>
 
 <style lang="less" scoped>
-
+.form-ipt {
+  width: 80px;
+  display: inline;
+}
 </style>
