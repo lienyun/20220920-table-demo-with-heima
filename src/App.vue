@@ -13,7 +13,10 @@
     <td>{{ index + 1 }}</td>
     <td>{{ row.goods_name }}</td>
     <td>${{ row.goods_price }}</td>
-    <td>{{ row.tags }}</td>
+    <td>
+      <!-- 標籤 -->
+      <span class="badge text-bg-warning ms-2" v-for="item in row.tags" :key="item">{{item}}</span>
+    </td>
     <td>
       <button type="button" class="btn btn-danger btn-sm" @click="onRemove(row.id)">刪除</button>
     </td>
