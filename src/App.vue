@@ -15,7 +15,7 @@
     <td>${{ row.goods_price }}</td>
     <td>{{ row.tags }}</td>
     <td>
-      <button type="button" class="btn btn-danger btn-sm">刪除</button>
+      <button type="button" class="btn btn-danger btn-sm" @click="onRemove(row.id)">刪除</button>
     </td>
   </template>
   </MyTable>
@@ -40,6 +40,10 @@
         const {data: res} = await this.$http.get('/api/goods')
         if(res.status !== 0) return console.log('getGoodsList FAILED')
         this.goodslist = res.data
+      },
+      //根據id刪除商品
+      onRemove(id) {
+        this.goodslist = this.goodslist.filter(x => x.id !== id)
       }
     },
     components: {
